@@ -46,6 +46,11 @@ F
 - Provides a detailed breakdown of the calculation results
 - Offers flexibility to use default values or specify custom inputs
 
+## TODO
+- RestAPI server
+- Streamlit application
+- workflow to deploy in hugging face
+
 ## Contributing
 
 Feel free to fork this project and submit pull requests with any enhancements or bug fixes. For major changes, please open an issue first to discuss the proposed changes.
