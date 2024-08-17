@@ -80,6 +80,7 @@ class StreamlitFunctions:
         st.session_state.user_initial_desired_net = (
             st.session_state.user_initial_desired_net_state
         )
+        st.session_state.type_to_calculate = "desired_salary"
 
     @staticmethod
     def reset_initial_salary_parameter():
@@ -157,6 +158,7 @@ class StreamlitFunctions:
             st.session_state.tax_on_current_salary = (
                 st.session_state.tax_on_current_salary_state
             )
+            st.session_state.type_to_calculate = "tax_on_current_salary"
 
         st.number_input(
             "Current monthly Salary (PKR)",
@@ -173,6 +175,7 @@ class StreamlitFunctions:
 
         def update_current_salary_parameter():
             st.session_state.current_salary = st.session_state.current_salary_state
+            st.session_state.type_to_calculate = "salary_parameters"
 
         st.number_input(
             "Current monthly salary after Tax (PKR)",
@@ -187,6 +190,7 @@ class StreamlitFunctions:
             st.session_state.desired_increment_percentage = (
                 st.session_state.desired_increment_percentage_state
             )
+            st.session_state.type_to_calculate = "salary_parameters"
 
         st.number_input(
             "Desired salary increment (as a decimal)",
@@ -202,6 +206,7 @@ class StreamlitFunctions:
             st.session_state.daily_cost_of_travel = (
                 st.session_state.daily_cost_of_travel_state
             )
+            st.session_state.type_to_calculate = "salary_parameters"
 
         st.number_input(
             "Daily cost of travel (PKR)",
@@ -216,6 +221,7 @@ class StreamlitFunctions:
             st.session_state.physical_days_per_week = (
                 st.session_state.physical_days_per_week_state
             )
+            st.session_state.type_to_calculate = "salary_parameters"
 
         st.number_input(
             "Number of On-Site days per week",
