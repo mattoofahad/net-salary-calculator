@@ -1,9 +1,15 @@
-import typer
 from typing import Optional
 
-from functions import calculated_initial_desired_net, calculate_additional_amount
+import typer
+import pandas as pd
+from constants import Constants
+from functions import Functions
 
 app = typer.Typer()
+
+tax_brackets_df = pd.DataFrame(
+    Constants.DEFAULT_TAX_BRACKETS, columns=["Lower Limit", "Upper Limit", "Tax Rate"]
+)
 
 
 @app.command()
@@ -22,10 +28,13 @@ def calculate_salary(
     """
     Calculate the additional amount needed for desired salary after tax adjustment.
     """
-    initial_desired_net = calculated_initial_desired_net(
-        current_salary, desired_increment_percentage, daily_cost_of_travel, physical_days_per_week
+    initial_desired_net = Functions.calculated_initial_desired_net(
+        current_salary,
+        desired_increment_percentage,
+        daily_cost_of_travel,
+        physical_days_per_week,
     )
-    result = calculate_additional_amount(initial_desired_net)
+    result = Functions.calculate_additional_amount(initial_desired_net, tax_brackets_df)
 
     typer.echo("Salary Calculation Results")
     typer.echo("--------------------------")
