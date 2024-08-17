@@ -5,7 +5,7 @@ colorTo: pink
 sdk: streamlit
 sdk_version: 1.37.1
 app_file: app.py
-pinned: true
+pinned: false
 ---
 
 
@@ -69,3 +69,8 @@ Feel free to fork this project and submit pull requests with any enhancements or
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
+
+
+git push https://mattoofahad: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@huggingface.co/spaces/mattoofahad/net-salary-calculate main
+
+git push --force https://mattoofahad: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@huggingface.co/spaces/mattoofahad/net-salary-calculate main
