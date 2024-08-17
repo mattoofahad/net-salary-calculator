@@ -1,14 +1,12 @@
 ---
 title: Net Salary Calculate
-emoji: 💵🤑🫰
 colorFrom: green
 colorTo: green
+emoji: 💵🤑🫰
 sdk: streamlit
-sdk_version: 1.37.1
 app_file: app.py
 pinned: false
 ---
-
 
 # Salary Calculator
 
