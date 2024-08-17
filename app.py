@@ -45,35 +45,50 @@ if st.button("Calculate", use_container_width=True) and st.session_state.valid_i
     st.markdown("---")
     if st.session_state.user_initial_desired_net > 0:
         st.success("✅ Initial Desired Net Salary was provided by the user.")
+        summary_df = pd.DataFrame(
+            {
+                "Parameter": [
+                    "Final Net Salary",
+                    "Tax",
+                    "Gross Salary",
+                ],
+                "Value": [
+                    f"PKR {result['final_net_salary']:,.2f}",
+                    f"PKR {result['tax']:,.2f}",
+                    f"PKR {result['gross_salary_needed']:,.2f}",
+                ],
+            }
+        )
     else:
         st.info(
             "ℹ️ Initial Desired Net Salary was calculated based on the provided parameters."
         )
+        summary_df = pd.DataFrame(
+            {
+                "Parameter": [
+                    "Current Salary",
+                    "Desired Increment",
+                    "Daily Travel Cost",
+                    "On-Site Days/Week",
+                    "Gross Salary",
+                    "Tax",
+                    "Final Net Salary",
+                ],
+                "Value": [
+                    f"PKR {st.session_state.current_salary:,.2f}",
+                    f"{st.session_state.desired_increment_percentage:.2%}",
+                    f"PKR {st.session_state.daily_cost_of_travel:,.2f}",
+                    f"{st.session_state.physical_days_per_week}",
+                    f"PKR {result['gross_salary_needed']:,.2f}",
+                    f"PKR {result['tax']:,.2f}",
+                    f"PKR {result['final_net_salary']:,.2f}",
+                ],
+            }
+        )
 
     # Display a summary of the calculation
     st.subheader("Calculation Summary")
-    summary_df = pd.DataFrame(
-        {
-            "Parameter": [
-                "Current Salary",
-                "Desired Increment",
-                "Daily Travel Cost",
-                "On-Site Days/Week",
-                "Gross Salary",
-                "Tax",
-                "Final Net Salary",
-            ],
-            "Value": [
-                f"PKR {st.session_state.current_salary:,.2f}",
-                f"{st.session_state.desired_increment_percentage:.2%}",
-                f"PKR {st.session_state.daily_cost_of_travel:,.2f}",
-                f"{st.session_state.physical_days_per_week}",
-                f"PKR {result['gross_salary_needed']:,.2f}",
-                f"PKR {result['tax']:,.2f}",
-                f"PKR {result['final_net_salary']:,.2f}",
-            ],
-        }
-    )
+
     st.table(summary_df)
 
     st.subheader("Salary Breakdown")
