@@ -1,3 +1,14 @@
+---
+title: Salary Calculator
+colorFrom: blue
+colorTo: yellow
+emoji: 💵🤑🫰
+sdk: streamlit
+app_file: app.py
+pinned: true
+---
+
+
 # Salary Calculator
 
 This Salary Calculator is a Python-based command-line tool designed to help users determine the additional amount needed on top of their desired salary to account for taxes. It takes into consideration factors such as current salary, desired increment, daily travel costs, and the number of physical workdays per week.
