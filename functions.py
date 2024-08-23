@@ -8,6 +8,12 @@ class Functions:
         return current_salary - Functions.calculate_monthly_tax(
             current_salary, tax_brackets
         )
+    
+    @staticmethod
+    def calculated_yearly_salary_after_tax(current_salary, tax_brackets):
+        return current_salary/12 - Functions.calculate_monthly_tax(
+            current_salary/12, tax_brackets
+        )
 
     @staticmethod
     def calculate_monthly_tax(monthly_income, tax_brackets):
@@ -151,6 +157,19 @@ class StreamlitFunctions:
         )
 
     @staticmethod
+    def reset_tax_on_yearly_salary():
+        def reset_values():
+            st.session_state.tax_on_yearly_salary = (
+                Constants.DEFAULT_YEARLY_SALARY_WITH_TAX
+            )
+
+        st.button(
+            "Reset Yearly Salary",
+            use_container_width=True,
+            on_click=reset_values,
+        )
+        
+    @staticmethod
     def print_tax_on_current_salary():
         st.header("Tax on Current Salary")
 
@@ -167,6 +186,25 @@ class StreamlitFunctions:
             value=st.session_state.tax_on_current_salary,
             key="tax_on_current_salary_state",
             on_change=update_tax_on_current_salary_parameter,
+        )
+        
+    @staticmethod
+    def print_tax_on_yearly_salary():
+        st.header("Tax on Yearly Salary")
+
+        def update_tax_on_yearly_salary_parameter():
+            st.session_state.tax_on_yearly_salary = (
+                st.session_state.tax_on_yearly_salary_state
+            )
+            st.session_state.type_to_calculate = "tax_on_current_salary"
+
+        st.number_input(
+            "Current Yearly Salary (PKR)",
+            min_value=0.0,
+            step=50000.0,
+            value=st.session_state.tax_on_yearly_salary,
+            key="tax_on_yearly_salary_state",
+            on_change=update_tax_on_yearly_salary_parameter,
         )
 
     @staticmethod
@@ -256,6 +294,10 @@ class StreamlitFunctions:
         if "tax_on_current_salary" not in st.session_state:
             st.session_state.tax_on_current_salary = (
                 Constants.DEFAULT_CURRENT_SALARY_WITH_TAX
+            )
+        if "tax_on_yearly_salary" not in st.session_state:
+            st.session_state.tax_on_yearly_salary = (
+                Constants.DEFAULT_YEARLY_SALARY_WITH_TAX
             )
         if "current_salary" not in st.session_state:
             st.session_state.current_salary = Constants.DEFAULT_CURRENT_SALARY

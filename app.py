@@ -1,31 +1,45 @@
+import pandas as pd
 import streamlit as st
 
 from functions import Functions, StreamlitFunctions
-import pandas as pd
-
+from logs import logger
 
 def calculate_salary_parameters():
+    logger.info("Calculating based on Salary parameters")
     st.session_state.type_to_calculate = "salary_parameters"
 
 
 def calculate_initial_salary_parameter():
+    logger.info("Calculating based on Desired Salary")
     st.session_state.type_to_calculate = "desired_salary"
 
 
 def calculate_tax_on_current_salary():
+    logger.info("Calculating Tax on Current Salary")
     st.session_state.type_to_calculate = "tax_on_current_salary"
 
-
+def calculate_tax_on_yearly_salary():
+    logger.info("Calculating Tax on Yearly Salary")
+    st.session_state.type_to_calculate = "tax_on_yearly_salary"
+    
 StreamlitFunctions.initialize_session_values()
 StreamlitFunctions.print_tax_brackets()
 StreamlitFunctions.reset_tax_brackets()
 
-StreamlitFunctions.print_salary_parameters()
-StreamlitFunctions.reset_salary_parameters()
+StreamlitFunctions.print_tax_on_current_salary()
+StreamlitFunctions.reset_tax_on_current_salary()
 st.button(
-    "Calculate Based on Salary Parameters",
+    "Calculate Tax on Current Salary",
     use_container_width=True,
-    on_click=calculate_salary_parameters,
+    on_click=calculate_tax_on_current_salary,
+)
+
+StreamlitFunctions.print_tax_on_yearly_salary()
+StreamlitFunctions.reset_tax_on_yearly_salary()
+st.button(
+    "Calculate Tax on Yearly Salary",
+    use_container_width=True,
+    on_click=calculate_tax_on_yearly_salary,
 )
 
 StreamlitFunctions.initial_salary_parameter()
@@ -36,18 +50,22 @@ st.button(
     on_click=calculate_initial_salary_parameter,
 )
 
-StreamlitFunctions.print_tax_on_current_salary()
-StreamlitFunctions.reset_tax_on_current_salary()
+StreamlitFunctions.print_salary_parameters()
+StreamlitFunctions.reset_salary_parameters()
 st.button(
-    "Calculate Tax on Current Salary",
+    "Calculate Based on Salary Parameters",
     use_container_width=True,
-    on_click=calculate_tax_on_current_salary,
+    on_click=calculate_salary_parameters,
 )
 
 if st.session_state.type_to_calculate is not None:
     if st.session_state.type_to_calculate == "tax_on_current_salary":
         initial_desired_net = Functions.calculated_current_salary_after_tax(
             st.session_state.tax_on_current_salary, st.session_state.tax_brackets
+        )
+    elif st.session_state.type_to_calculate == "tax_on_yearly_salary":
+        initial_desired_net = Functions.calculated_yearly_salary_after_tax(
+            st.session_state.tax_on_yearly_salary, st.session_state.tax_brackets
         )
     elif st.session_state.type_to_calculate == "desired_salary":
         initial_desired_net = st.session_state.user_initial_desired_net
@@ -75,6 +93,25 @@ if st.session_state.type_to_calculate is not None:
                     "Current Salary",
                     "Tax",
                     "Gross Salary",
+                ],
+                "Value": [
+                    f"PKR {result['final_net_salary']:,.2f}",
+                    f"PKR {result['tax']:,.2f}",
+                    f"PKR {result['gross_salary_needed']:,.2f}",
+                ],
+            }
+        )
+    elif st.session_state.type_to_calculate == "tax_on_yearly_salary":
+        st.success(
+            "✅ Calculation was done based on the selected value of 'Tax on Yearly Salary'"
+        )
+        result = {key:value*12 for key, value in result.items()}
+        summary_df = pd.DataFrame(
+            {
+                "Parameter": [
+                    "Yearly Salary",
+                    "Yearly Tax",
+                    "Gross Yearly Salary",
                 ],
                 "Value": [
                     f"PKR {result['final_net_salary']:,.2f}",
